@@ -31,8 +31,7 @@ persistData(newList)
     setTodoValue(EditedList)
     deleteTodo(index)
   }
-
-  useEffect(()=>{
+ useEffect(()=>{
 
 let localTodos=localStorage.getItem('todos');
 if(!localTodos){
