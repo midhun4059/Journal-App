@@ -1,23 +1,29 @@
 import TodoInput from './Components/TodoInput'
 import TodoList from './Components/TodoList'
-import TodoCard from './Components/TodoCard'
-import { useState } from 'react';
+
+import { useEffect, useState } from 'react';
 
 const App = () => {
   
 
-  const [todos,setTodos]=useState(['Workout at morning  ','Eating good food  ','Sleep early  ','Work from home '])
+  const [todos,setTodos]=useState([])
   const[todoValue,setTodoValue]=useState('');
 
-  const handleAddTodos=(newTodo)=>{
-   const listOfTodos=[...todos,newTodo]
-   setTodos(listOfTodos)
+  const persistData=(newList)=>{
+    localStorage.setItem('todos',JSON.stringify({todos:newList}))
+  }
 
+  const handleAddTodos=(newTodo)=>{
+   const newList=[...todos,newTodo]
+   persistData(newList)
+   setTodos(newList)
+  }
    const deleteTodo=(index)=>{
 const newList=todos.filter((todo,todoIndex)=>{
   return todoIndex !==index
 })
-   setTodos(newList)
+persistData(newList)
+ setTodos(newList)
   }
 
   const editTodo=(index)=>{
@@ -26,6 +32,16 @@ const newList=todos.filter((todo,todoIndex)=>{
     deleteTodo(index)
   }
 
+  useEffect(()=>{
+
+let localTodos=localStorage.getItem('todos');
+if(!localTodos){
+  return
+}
+localTodos=JSON.parse(localTodos).todos
+setTodos(localTodos)
+  },[])
+
   return (
     <>
       <TodoInput  todoValue={todoValue} setTodoValue={setTodoValue} handleAddTodos={handleAddTodos}/>
@@ -33,7 +49,7 @@ const newList=todos.filter((todo,todoIndex)=>{
      
     </>
   )
-}
+
 }
 
 export default App
