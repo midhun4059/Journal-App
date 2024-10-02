@@ -7,7 +7,7 @@ const{ todos }=props
     {todos.map((todo,todoIndex)=>{
       return( 
 
-        <TodoCard {...props} index={todoIndex} key={todoIndex}>
+        <TodoCard {...props} index={todoIndex}>
           <p>{todo}</p>
           </TodoCard>
       )
