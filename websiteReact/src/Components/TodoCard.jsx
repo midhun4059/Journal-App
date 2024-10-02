@@ -15,8 +15,6 @@ const TodoCard = (props) => {
 </button>
       </div>
      </li>
-    
-  )
+    )
 }
-
 export default TodoCard
